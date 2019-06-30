@@ -5,7 +5,7 @@ const rootReducer = (state = initState, action) => {
     //console.log(action.posts.data.posts);
     return {
       ...state,
-      posts: action.posts.data.posts
+      posts: action.posts.data.posts.slice(0, 10)
     };
   }
   return state;

@@ -6,7 +6,7 @@ import * as actionCreators from "../actions/index";
 class Post extends Component {
   render() {
     const { post } = this.props;
-    console.log(this.props, "posts p");
+
     const singlePost = post ? (
       <div className="container">
         <h2>{post.seo.title}</h2>
@@ -18,7 +18,7 @@ class Post extends Component {
             src={post.featured_image.source}
             class="img-fluid"
             width="600"
-            alt="Responsive image"
+            alt={post.seo.title}
           />
         </div>
         <div className="mt-3 p-5">
@@ -35,15 +35,10 @@ class Post extends Component {
   }
 }
 
-// const mapStateToProps = state => {
-//   return { posts: state.posts };
-// };
-
 const mapStateToProps = (state, ownProps) => {
-  console.log(state.posts, "state")
   let id = ownProps.match.params.post_id;
   return {
-    post: state.posts.find(post => post.id == id)
+    post: state.posts.find(post => post.id === id)
   };
 };
 

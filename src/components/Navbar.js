@@ -5,9 +5,9 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-light bg-light">
       <div className="container">
-        <a className="navbar-brand" href="">
+        <span className="navbar-brand">
           <img src={Techinasia} width="150" alt="techinasia logo" />
-        </a>
+        </span>
       </div>
     </nav>
   );

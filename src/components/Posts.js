@@ -9,12 +9,11 @@ class Posts extends Component {
   }
   render() {
     const { posts } = this.props;
-    console.log(posts, "props");
 
     const postList = posts.length ? (
       posts.map(post => {
         return (
-          <div className="card mb-1">
+          <div className="card mb-1" key={post.id}>
             <div className="row no-gutters">
               <div className="col-md-4">
                 <Link to={"/" + post.id}>
@@ -35,7 +34,7 @@ class Posts extends Component {
                     {post.seo.description}
                   </p>
                   <p className="card-text">
-                    <small className="text-muted">{post.author.display_name}</small>
+                    <small className="text-muted">{post.date_gmt} - {post.author.display_name}</small>
                   </p>
                 </div>
               </div>
@@ -44,10 +43,9 @@ class Posts extends Component {
         );
       })
     ) : (
-        <div className="center">No posts yet</div>
+        <div className="center">...</div>
       );
 
-    console.log(posts, "laststate")
     return (
       <div onLoad={this.props.getAllPosts} className="container">
         {postList}
