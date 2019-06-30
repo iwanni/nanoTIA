@@ -1,43 +1,66 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import * as actionCreators from "../actions/index";
 
 class Posts extends Component {
-  state = {};
+  componentDidMount() {
+    this.props.getAllPosts();
+  }
   render() {
-    return (
-      <div className="container">
-        <div className="card mb-1">
-          <div className="row no-gutters">
-            <div className="col-md-4">
-              <Link to={"/" + 1}>
-                <img
-                  src="https://via.placeholder.com/150"
-                  className=""
-                  width="250"
-                  alt="..."
-                />
-              </Link>
-            </div>
-            <div className="col-md-8">
-              <div className="card-body">
-                <Link to={"/" + 1}>
-                  <h2 className="card-title">Card title</h2>
+    const { posts } = this.props;
+    console.log(posts, "props");
+
+    const postList = posts.length ? (
+      posts.map(post => {
+        return (
+          <div className="card mb-1">
+            <div className="row no-gutters">
+              <div className="col-md-4">
+                <Link to={"/" + post.id}>
+                  <img
+                    src={post.featured_image.source}
+                    className=""
+                    width="350"
+                    alt="..."
+                  />
                 </Link>
-                <p className="card-text">
-                  This is a wider card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
-                </p>
-                <p className="card-text">
-                  <small className="text-muted">Last updated 3 mins ago</small>
-                </p>
+              </div>
+              <div className="col-md-8">
+                <div className="card-body">
+                  <Link to={"/" + post.id}>
+                    <h2 className="card-title">{post.seo.title}</h2>
+                  </Link>
+                  <p className="card-text">
+                    {post.seo.description}
+                  </p>
+                  <p className="card-text">
+                    <small className="text-muted">{post.author.display_name}</small>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        );
+      })
+    ) : (
+        <div className="center">No posts yet</div>
+      );
+
+    console.log(posts, "laststate")
+    return (
+      <div onLoad={this.props.getAllPosts} className="container">
+        {postList}
       </div>
     );
   }
 }
 
-export default Posts;
+const mapStateToProps = state => {
+  return { posts: state.posts };
+};
+
+export default connect(
+  mapStateToProps,
+  actionCreators
+)(Posts);
